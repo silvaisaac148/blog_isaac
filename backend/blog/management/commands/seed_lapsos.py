@@ -4,6 +4,7 @@ Run: python manage.py seed_lapsos
 """
 
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from blog.models import Lapso
 
 
@@ -36,3 +37,7 @@ class Command(BaseCommand):
             self.stdout.write(f"  {status}: {lapso.title}")
 
         self.stdout.write(self.style.SUCCESS("\n¡Lapsos listos!"))
+
+        if not User.objects.filter(username="admin").exists():
+            User.objects.create_superuser("admin", "admin@admin.com", "admin1234")
+            self.stdout.write(self.style.SUCCESS("✅ Admin superuser created (admin:admin1234)"))
