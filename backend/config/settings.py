@@ -22,6 +22,7 @@ ALLOWED_HOSTS = config(
     default="localhost,127.0.0.1",
     cast=lambda v: [h.strip() for h in v.split(",")],
 )
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host not in ("localhost", "127.0.0.1", "*")]
 
 # ─── Applications ────────────────────────────────────────────────────
 INSTALLED_APPS = [
