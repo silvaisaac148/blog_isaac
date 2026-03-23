@@ -1,0 +1,26 @@
+runtime: python312
+entrypoint: gunicorn config.wsgi --bind :$PORT --workers 2 --threads 4
+
+instance_class: F2
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: "config.settings"
+  DJANGO_DEBUG: "False"
+  # Set these via `gcloud app deploy` or Secret Manager:
+  # DJANGO_SECRET_KEY: "your-production-secret-key"
+  # DB_NAME: "blog_isaac"
+  # DB_USER: "your-db-user"
+  # DB_PASSWORD: "your-db-password"
+  # DB_HOST: "/cloudsql/PROJECT_ID:REGION:INSTANCE_NAME"
+
+handlers:
+  - url: /static
+    static_dir: staticfiles/
+  - url: /.*
+    script: auto
+    secure: always
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 2
+  target_cpu_utilization: 0.65
