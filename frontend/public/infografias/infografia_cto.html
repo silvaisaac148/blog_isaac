@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infografía CTO · De Programador a Orquestador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050916;--bg2:#08102a;--bg3:#0d1535;
+  --card:#0f1a2e;--card2:#141f38;
+  --blue:#22d3ee;--blue-dim:rgba(34,211,238,.09);
+  --gold:#f5c242;--gold-dim:rgba(245,194,66,.09);
+  --coral:#ff7060;--coral-dim:rgba(255,112,96,.09);
+  --mint:#10f0a0;--mint-dim:rgba(16,240,160,.09);
+  --purple:#a78bfa;
+  --text:#dce6f8;--muted:#6b7a9a;
+  --border:rgba(255,255,255,0.06);
+  --r:16px;
+}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px}
+
+/* ══════════ HEADER ══════════ */
+.hdr{
+  position:relative;background:linear-gradient(140deg,#02050f 0%,#080f28 50%,#030812 100%);
+  padding:72px 48px 60px;border-bottom:2px solid rgba(34,211,238,.2);
+  overflow:hidden;text-align:center;
+}
+.hdr-dots{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(34,211,238,.35) 1px,transparent 1px);
+  background-size:38px 38px;opacity:.18;
+}
+.hdr-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 900px 400px at 50% -80px,rgba(34,211,238,.07),transparent),
+             radial-gradient(ellipse 500px 350px at 80% 110%,rgba(245,194,66,.05),transparent);
+}
+.hdr-inner{position:relative;z-index:1}
+.hdr-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.28);
+  border-radius:999px;padding:6px 20px;font-size:11px;font-weight:700;
+  color:var(--blue);letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px;
+}
+.hdr h1{
+  font-family:'Syne',sans-serif;font-size:clamp(30px,5vw,66px);
+  font-weight:800;letter-spacing:-1.5px;line-height:1.05;
+  background:linear-gradient(115deg,#fff 0%,var(--blue) 55%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:16px;
+}
+.hdr-sub{font-size:17px;color:var(--muted);max-width:640px;margin:0 auto 36px;
+  font-style:italic;font-weight:300}
+.chips{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.chip{
+  padding:8px 20px;border-radius:999px;font-size:11.5px;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;border:1px solid;
+}
+.c-blue{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+.c-gold{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.c-coral{border-color:var(--coral);color:var(--coral);background:var(--coral-dim)}
+.c-mint{border-color:var(--mint);color:var(--mint);background:var(--mint-dim)}
+
+/* ══════════ WRAP ══════════ */
+.wrap{max-width:1320px;margin:0 auto;padding:0 28px 80px}
+
+/* ══════════ SECTION BLOCK ══════════ */
+.sec{border-radius:24px;padding:44px 44px 50px;margin:40px 0;border:1px solid var(--border)}
+.s1{background:linear-gradient(160deg,rgba(34,211,238,.04) 0%,var(--bg2) 100%)}
+.s2{background:linear-gradient(160deg,rgba(245,194,66,.04) 0%,var(--bg2) 100%)}
+.s3{background:linear-gradient(160deg,rgba(255,112,96,.04) 0%,var(--bg2) 100%)}
+.s4{background:linear-gradient(160deg,rgba(16,240,160,.04) 0%,var(--bg2) 100%)}
+
+/* ══════════ SECTION HEADER ══════════ */
+.sh{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.sn{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;flex-shrink:0;
+}
+.n1{background:rgba(34,211,238,.12);color:var(--blue)}
+.n2{background:rgba(245,194,66,.12);color:var(--gold)}
+.n3{background:rgba(255,112,96,.12);color:var(--coral)}
+.n4{background:rgba(16,240,160,.12);color:var(--mint)}
+.st{font-family:'Syne',sans-serif;font-size:26px;font-weight:800}
+.ss{color:var(--muted);font-size:13.5px;margin-top:4px}
+.t1{color:var(--blue)}.t2{color:var(--gold)}.t3{color:var(--coral)}.t4{color:var(--mint)}
+
+/* ══════════ PILAR 1 CYCLE SVG ══════════ */
+.cycle-wrap{display:flex;justify-content:center;margin-bottom:36px}
+
+/* ══════════ PILAR 1 GRID ══════════ */
+.p1-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pc{border-radius:18px;padding:30px;border:1px solid;position:relative;overflow:hidden}
+.pc::after{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:130px;height:130px;border-radius:50%;opacity:.06;
+}
+.pc-plan{border-color:rgba(34,211,238,.3);background:linear-gradient(145deg,rgba(34,211,238,.07),rgba(34,211,238,.02))}
+.pc-plan::after{background:var(--blue)}
+.pc-org{border-color:rgba(245,194,66,.3);background:linear-gradient(145deg,rgba(245,194,66,.07),rgba(245,194,66,.02))}
+.pc-org::after{background:var(--gold)}
+.pc-dir{border-color:rgba(255,112,96,.3);background:linear-gradient(145deg,rgba(255,112,96,.07),rgba(255,112,96,.02))}
+.pc-dir::after{background:var(--coral)}
+.pc-ctrl{border-color:rgba(16,240,160,.3);background:linear-gradient(145deg,rgba(16,240,160,.07),rgba(16,240,160,.02))}
+.pc-ctrl::after{background:var(--mint)}
+
+.pc-icon{font-size:38px;margin-bottom:10px;display:block}
+.pc-title{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;margin-bottom:10px}
+.pc-plan .pc-title{color:var(--blue)}
+.pc-org  .pc-title{color:var(--gold)}
+.pc-dir  .pc-title{color:var(--coral)}
+.pc-ctrl .pc-title{color:var(--mint)}
+.pc-def{font-size:13.5px;color:var(--text);margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:10px}
+.pc-tools{font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.pc-ex{
+  font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.03);
+  border-radius:8px;padding:10px 12px;font-style:italic;border-left:3px solid;
+}
+.pc-plan .pc-ex{border-color:var(--blue)}
+.pc-org  .pc-ex{border-color:var(--gold)}
+.pc-dir  .pc-ex{border-color:var(--coral)}
+.pc-ctrl .pc-ex{border-color:var(--mint)}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{
+  font-size:11px;padding:3px 9px;border-radius:6px;font-weight:600;
+  background:rgba(255,255,255,.04);color:var(--muted);border:1px solid rgba(255,255,255,.08);
+}
+
+/* ══════════ PILAR 2 DRUCKER ══════════ */
+.d-layout{display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start}
+.d-portrait{display:flex;flex-direction:column;align-items:center;gap:14px}
+.d-frame{
+  width:220px;height:270px;border-radius:18px;overflow:hidden;
+  border:2px solid rgba(245,194,66,.3);
+  box-shadow:0 0 50px rgba(245,194,66,.1);
+}
+.d-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--gold);text-align:center}
+.d-dates{font-size:12px;color:var(--muted);text-align:center}
+.d-epithet{
+  font-size:12px;color:var(--muted);text-align:center;font-style:italic;
+  padding:8px 12px;border:1px solid rgba(245,194,66,.15);border-radius:8px;
+  background:rgba(245,194,66,.03);line-height:1.4;width:220px;
+}
+.d-content{display:flex;flex-direction:column;gap:18px}
+.d-card{background:var(--card);border-radius:14px;padding:18px 22px;border-left:4px solid var(--gold)}
+.d-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:7px}
+.d-card p{font-size:13.5px;color:var(--text)}
+.d-quote{
+  background:linear-gradient(135deg,rgba(245,194,66,.07),rgba(245,194,66,.02));
+  border-radius:14px;padding:20px 24px 16px;
+  border:1px solid rgba(245,194,66,.18);font-style:italic;
+  font-size:15px;color:var(--text);position:relative;
+}
+.d-quote::before{
+  content:'"';position:absolute;top:-8px;left:14px;
+  font-size:72px;color:var(--gold);font-family:Georgia,serif;opacity:.25;line-height:1;
+}
+.d-quote cite{display:block;font-size:11px;color:var(--muted);margin-top:8px;font-style:normal}
+.d-timeline{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px;
+}
+.tli{background:var(--card);border-radius:12px;padding:14px;text-align:center;border-top:3px solid}
+.tli.a{border-color:var(--gold)}.tli.b{border-color:var(--blue)}.tli.c{border-color:var(--coral)}.tli.d{border-color:var(--mint)}
+.tli-yr{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:4px}
+.tli.a .tli-yr{color:var(--gold)}.tli.b .tli-yr{color:var(--blue)}
+.tli.c .tli-yr{color:var(--coral)}.tli.d .tli-yr{color:var(--mint)}
+.tli-txt{font-size:11.5px;color:var(--muted);line-height:1.4}
+
+.kw-box{
+  background:linear-gradient(135deg,rgba(245,194,66,.1),rgba(245,194,66,.03));
+  border:1px solid rgba(245,194,66,.25);border-radius:14px;padding:20px 24px;
+}
+.kw-box h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--gold);margin-bottom:12px}
+.kw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kw-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;
+  background:rgba(255,255,255,.03);border-radius:10px}
+.kw-num{
+  width:26px;height:26px;border-radius:8px;
+  background:rgba(245,194,66,.15);color:var(--gold);
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.kw-text{font-size:12.5px;color:var(--text)}
+
+/* ══════════ PILAR 3 MINTZBERG ══════════ */
+.mz-cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:32px}
+.mz-cat{border-radius:18px;padding:22px;border:1px solid}
+.mz-i{border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.04)}
+.mz-n{border-color:rgba(34,211,238,.3);background:rgba(34,211,238,.04)}
+.mz-d{border-color:rgba(255,112,96,.3);background:rgba(255,112,96,.04)}
+.mz-head{
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+}
+.mz-i .mz-head{color:var(--purple)}.mz-n .mz-head{color:var(--blue)}.mz-d .mz-head{color:var(--coral)}
+.mz-roles{list-style:none;display:flex;flex-direction:column;gap:8px}
+.mz-role{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.025);
+}
+.re{font-size:18px;flex-shrink:0;line-height:1.3}
+.rn{font-weight:600;font-size:13px;margin-bottom:2px}
+.mz-i .rn{color:var(--purple)}.mz-n .rn{color:var(--blue)}.mz-d .rn{color:var(--coral)}
+.rd{font-size:11.5px;color:var(--muted);line-height:1.4}
+
+.top3-label{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:700;
+  color:var(--coral);margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.top3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.t3c{
+  border-radius:18px;padding:26px;
+  background:linear-gradient(145deg,rgba(255,112,96,.08),rgba(255,112,96,.02));
+  border:1px solid rgba(255,112,96,.3);text-align:center;position:relative;overflow:hidden;
+}
+.t3rank{
+  position:absolute;top:10px;right:14px;
+  font-family:'Syne',sans-serif;font-size:48px;font-weight:800;
+  color:rgba(255,112,96,.1);line-height:1;
+}
+.t3icon{font-size:42px;margin-bottom:12px;display:block}
+.t3name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--coral);margin-bottom:8px}
+.t3why{font-size:12.5px;color:var(--muted);line-height:1.5}
+.t3cat{
+  display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;
+  font-size:10.5px;font-weight:700;letter-spacing:.06em;
+  background:rgba(255,112,96,.1);border:1px solid rgba(255,112,96,.25);color:var(--coral);
+}
+
+/* mintzberg bio */
+.mz-bio{
+  display:flex;align-items:flex-start;gap:16px;padding:16px 20px;
+  background:var(--card);border-radius:14px;margin-bottom:24px;
+  border:1px solid var(--border);
+}
+.mz-bio-icon{font-size:36px;flex-shrink:0}
+.mz-bio-text h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--coral);margin-bottom:4px}
+.mz-bio-text p{font-size:13px;color:var(--muted)}
+
+/* ══════════ PILAR 4 GERENCIA ══════════ */
+.g-layout{display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:start}
+.g-tri-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.g-tri-label{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--mint);text-align:center}
+.g-pillars{display:flex;flex-direction:column;gap:18px}
+.gp{border-radius:14px;padding:20px 22px;border-left:4px solid}
+.gp-t{border-color:var(--blue);background:var(--blue-dim)}
+.gp-m{border-color:var(--gold);background:var(--gold-dim)}
+.gp-f{border-color:var(--mint);background:var(--mint-dim)}
+.gp-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:6px}
+.gp-t .gp-title{color:var(--blue)}.gp-m .gp-title{color:var(--gold)}.gp-f .gp-title{color:var(--mint)}
+.gp-body{font-size:13.5px;color:var(--text);margin-bottom:8px}
+.gp-ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.gp-ul li{font-size:12.5px;color:var(--muted);padding-left:14px;position:relative}
+.gp-ul li::before{content:'▸';position:absolute;left:0;font-size:10px}
+.gp-t .gp-ul li::before{color:var(--blue)}.gp-m .gp-ul li::before{color:var(--gold)}.gp-f .gp-ul li::before{color:var(--mint)}
+.gp-no{
+  display:inline-block;margin-top:8px;padding:4px 10px;
+  font-size:11px;border-radius:8px;font-weight:600;font-style:italic;
+  background:rgba(255,255,255,.04);color:var(--muted);
+}
+
+.g-bottom{margin-top:32px}
+.g-danger{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px;
+}
+.gd-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--mint);margin-bottom:14px}
+.gd-item{
+  border-radius:12px;padding:16px;background:var(--card);border:1px solid var(--border);
+  border-top:3px solid;
+}
+.gd-item.dt{border-color:var(--blue)}.gd-item.dm{border-color:var(--gold)}.gd-item.df{border-color:var(--mint)}
+.gd-who{font-size:12px;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em}
+.gd-item.dt .gd-who{color:var(--blue)}.gd-item.dm .gd-who{color:var(--gold)}.gd-item.df .gd-who{color:var(--mint)}
+.gd-text{font-size:12.5px;color:var(--muted)}
+
+/* ══════════ STAT ROW ══════════ */
+.stats{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap}
+.stat{
+  flex:1;min-width:110px;background:var(--card);border-radius:14px;
+  padding:14px 16px;text-align:center;border:1px solid var(--border);
+}
+.stat-n{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:2px}
+.stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+/* ══════════ CONCLUSION ══════════ */
+.concl{
+  background:linear-gradient(140deg,#060c22,#0c152e);
+  border-radius:24px;padding:52px 52px 44px;text-align:center;
+  border:1px solid rgba(34,211,238,.12);position:relative;overflow:hidden;margin-top:40px;
+}
+.concl::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 700px 300px at 50% -30px,rgba(34,211,238,.05),transparent),
+             radial-gradient(ellipse 500px 400px at 80% 110%,rgba(245,194,66,.03),transparent);
+}
+.concl-inner{position:relative;z-index:1}
+.concl h2{
+  font-family:'Syne',sans-serif;font-size:30px;font-weight:800;
+  background:linear-gradient(120deg,var(--blue),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:16px;
+}
+.concl p{max-width:680px;margin:0 auto 28px;color:var(--muted);font-size:15px}
+.skills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.skl{
+  padding:7px 16px;border-radius:8px;font-size:12.5px;font-weight:600;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);color:var(--muted);
+}
+
+/* ══════════ DIVIDER ══════════ */
+.div{height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);margin:8px 0}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:900px){
+  .p1-grid,.d-layout,.g-layout{grid-template-columns:1fr}
+  .mz-cats,.top3,.d-timeline,.g-danger{grid-template-columns:1fr}
+  .kw-grid{grid-template-columns:1fr}
+  .hdr{padding:48px 24px 44px}
+  .sec{padding:28px 22px 32px}
+  .wrap{padding:0 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<div class="hdr">
+  <div class="hdr-dots"></div>
+  <div class="hdr-glow"></div>
+  <div class="hdr-inner">
+    <div class="hdr-badge">🎓 Gestión de Tecnología &nbsp;·&nbsp; Actividad CTO</div>
+    <h1>DE PROGRAMADOR A ORQUESTADOR</h1>
+    <p class="hdr-sub">Los 4 pilares que definen al verdadero líder tecnológico del siglo XXI</p>
+    <div class="chips">
+      <span class="chip c-blue">① Proceso Administrativo en el Software</span>
+      <span class="chip c-gold">② El Legado de Drucker</span>
+      <span class="chip c-coral">③ Roles Gerenciales de Mintzberg</span>
+      <span class="chip c-mint">④ Gerencia Integral</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════════════ PILAR 1 ══════════════════ -->
+<div class="sec s1">
+  <div class="sh">
+    <div class="sn n1">1</div>
+    <div>
+      <div class="st t1">El Proceso Administrativo en el Software</div>
+      <div class="ss">Cómo se aplica la gestión clásica en el ciclo de vida de un proyecto de software</div>
+    </div>
+  </div>
+
+  <!-- Cycle diagram SVG -->
+  <div class="cycle-wrap">
+    <svg viewBox="0 0 700 190" width="100%" style="max-width:700px;display:block">
+      <defs>
+        <marker id="ah" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="rgba(255,255,255,0.25)"/>
+        </marker>
+      </defs>
+      <!-- Track line -->
+      <path d="M100 95 Q175 30 350 30 Q525 30 600 95 Q525 160 350 160 Q175 160 100 95" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="2" stroke-dasharray="6 4"/>
+      <!-- Node 1: PLANIFICACIÓN -->
+      <circle cx="100" cy="95" r="56" fill="rgba(34,211,238,0.09)" stroke="rgba(34,211,238,0.35)" stroke-width="1.5"/>
+      <text x="100" y="87" text-anchor="middle" font-family="Syne,sans-serif" font-size="9" font-weight="800" fill="#22d3ee" letter-spacing="1">PLANIFICACIÓN</text>
+      <text x="100" y="100" text-anchor="middle" font-size="24">📋</text>
+      <text x="100" y="118" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="rgba(34,211,238,0.6)">¿Qué y cuándo?</text>
+      <!-- Arrow 1→2 -->
+      <path d="M152 60 Q220 25 280 26" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <!-- Node 2: ORGANIZACIÓN -->
+      <circle cx="350" cy="30" r="52" fill="rgba(245,194,66,0.09)" stroke="rgba(245,194,66,0.35)" stroke-width="1.5"/>
+      <text x="350" y="22" text-anchor="middle" font-family="Syne,sans-serif" font-size="9" font-weight="800" fill="#f5c242" letter-spacing="1">ORGANIZACIÓN</text>
+      <text x="350" y="35" text-anchor="middle" font-size="22">🏗️</text>
+      <text x="350" y="53" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="rgba(245,194,66,0.6)">¿Quién y cómo?</text>
+      <!-- Arrow 2→3 -->
+      <path d="M420 26 Q490 25 548 60" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <!-- Node 3: DIRECCIÓN -->
+      <circle cx="600" cy="95" r="56" fill="rgba(255,112,96,0.09)" stroke="rgba(255,112,96,0.35)" stroke-width="1.5"/>
+      <text x="600" y="87" text-anchor="middle" font-family="Syne,sans-serif" font-size="9" font-weight="800" fill="#ff7060" letter-spacing="1">DIRECCIÓN</text>
+      <text x="600" y="100" text-anchor="middle" font-size="24">🧭</text>
+      <text x="600" y="118" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="rgba(255,112,96,0.6)">¿Lideramos bien?</text>
+      <!-- Arrow 3→4 -->
+      <path d="M548 130 Q490 165 420 164" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <!-- Node 4: CONTROL -->
+      <circle cx="350" cy="160" r="52" fill="rgba(16,240,160,0.09)" stroke="rgba(16,240,160,0.35)" stroke-width="1.5"/>
+      <text x="350" y="152" text-anchor="middle" font-family="Syne,sans-serif" font-size="9" font-weight="800" fill="#10f0a0" letter-spacing="1">CONTROL</text>
+      <text x="350" y="165" text-anchor="middle" font-size="22">📊</text>
+      <text x="350" y="182" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8" fill="rgba(16,240,160,0.6)">¿Vamos bien?</text>
+      <!-- Arrow 4→1 -->
+      <path d="M280 164 Q220 165 152 130" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <!-- Center label -->
+      <text x="350" y="91" text-anchor="middle" font-family="Syne,sans-serif" font-size="11" font-weight="800" fill="rgba(255,255,255,0.4)">CICLO</text>
+      <text x="350" y="106" text-anchor="middle" font-family="Syne,sans-serif" font-size="11" font-weight="800" fill="rgba(255,255,255,0.4)">CONTINUO</text>
+    </svg>
+  </div>
+
+  <!-- 4 process cards -->
+  <div class="p1-grid">
+
+    <div class="pc pc-plan">
+      <span class="pc-icon">📋</span>
+      <div class="pc-title">PLANIFICACIÓN</div>
+      <div class="pc-def"><strong>Definición:</strong> Establecer objetivos, alcance, cronograma, recursos y riesgos antes de escribir una sola línea de código. Es el mapa del viaje.</div>
+      <div class="pc-tools">🛠 Herramientas</div>
+      <div class="tag-row">
+        <span class="tag">Product Backlog</span><span class="tag">Sprint Planning</span>
+        <span class="tag">Roadmap</span><span class="tag">WBS</span>
+        <span class="tag">MoSCoW</span><span class="tag">Story Points</span>
+      </div>
+      <div style="height:10px"></div>
+      <div class="pc-ex">
+        <strong style="color:var(--blue)">Ejemplo:</strong> El PM de una app bancaria prioriza épicas con MoSCoW: "Must Have" = transferencias, "Could Have" = notificaciones push. Define un roadmap de 3 sprints de 2 semanas y estima 80 story points por sprint con el equipo de 5 devs.
+      </div>
+    </div>
+
+    <div class="pc pc-org">
+      <span class="pc-icon">🏗️</span>
+      <div class="pc-title">ORGANIZACIÓN</div>
+      <div class="pc-def"><strong>Definición:</strong> Estructurar el equipo, asignar roles con claridad y establecer los flujos de trabajo y comunicación que sostienen al proyecto.</div>
+      <div class="pc-tools">🛠 Herramientas</div>
+      <div class="tag-row">
+        <span class="tag">Organigrama Scrum</span><span class="tag">Jira / Linear</span>
+        <span class="tag">GitHub Projects</span><span class="tag">Confluence</span>
+        <span class="tag">RACI Matrix</span><span class="tag">Squads</span>
+      </div>
+      <div style="height:10px"></div>
+      <div class="pc-ex">
+        <strong style="color:var(--gold)">Ejemplo:</strong> Un e-commerce divide al equipo en 3 squads: Frontend (3 devs + UX), Backend (3 devs + DB admin) y DevOps (2 ingenieros). Cada squad tiene dueño de área y se reporta al Tech Lead. Aplica Conway's Law: la arquitectura refleja la organización.
+      </div>
+    </div>
+
+    <div class="pc pc-dir">
+      <span class="pc-icon">🧭</span>
+      <div class="pc-title">DIRECCIÓN</div>
+      <div class="pc-def"><strong>Definición:</strong> Liderar, motivar y orientar al equipo hacia los objetivos del proyecto. Es el arte de que personas talentosas den lo mejor de sí mismas.</div>
+      <div class="pc-tools">🛠 Herramientas</div>
+      <div class="tag-row">
+        <span class="tag">Daily Standup</span><span class="tag">1:1 Meetings</span>
+        <span class="tag">Code Reviews</span><span class="tag">Pair Programming</span>
+        <span class="tag">Servant Leadership</span><span class="tag">OKRs</span>
+      </div>
+      <div style="height:10px"></div>
+      <div class="pc-ex">
+        <strong style="color:var(--coral)">Ejemplo:</strong> El Tech Lead conduce daily standup de 15 min, realiza 1:1 semanal con cada dev para detectar bloqueos y hace code reviews enfocados en transferencia de conocimiento. Cuando surge conflicto entre deuda técnica y deadline, facilita la decisión técnica con datos.
+      </div>
+    </div>
+
+    <div class="pc pc-ctrl">
+      <span class="pc-icon">📊</span>
+      <div class="pc-title">CONTROL</div>
+      <div class="pc-def"><strong>Definición:</strong> Medir el avance del proyecto contra el plan, detectar desviaciones temprano y aplicar las correcciones necesarias antes de que escalen.</div>
+      <div class="pc-tools">🛠 Herramientas</div>
+      <div class="tag-row">
+        <span class="tag">KPIs / DORA Metrics</span><span class="tag">CI/CD Pipeline</span>
+        <span class="tag">SonarQube</span><span class="tag">Burndown Chart</span>
+        <span class="tag">Retrospectivas</span><span class="tag">Dashboards</span>
+      </div>
+      <div style="height:10px"></div>
+      <div class="pc-ex">
+        <strong style="color:var(--mint)">Ejemplo:</strong> El pipeline CI/CD con SonarQube alerta que la cobertura de pruebas cayó de 85% a 58% en el último sprint. El PM detiene nuevas features y dedica el próximo sprint a estabilización. Las <em>DORA Metrics</em> muestran MTTR de 4 horas → meta: 30 min.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="stat-n t1">4</div><div class="stat-l">Fases del ciclo</div></div>
+    <div class="stat"><div class="stat-n t1">71%</div><div class="stat-l">Empresas usan Agile</div></div>
+    <div class="stat"><div class="stat-n t1">2×</div><div class="stat-l">Proyectos con buen ctrl</div></div>
+    <div class="stat"><div class="stat-n t1">68%</div><div class="stat-l">Proyectos fallan por falta de planif.</div></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ PILAR 2 ══════════════════ -->
+<div class="sec s2">
+  <div class="sh">
+    <div class="sn n2">2</div>
+    <div>
+      <div class="st t2">El Legado de Drucker</div>
+      <div class="ss">Por qué su concepto de "Trabajador del Conocimiento" cambió la gestión de ingenieros para siempre</div>
+    </div>
+  </div>
+
+  <div class="d-layout">
+    <!-- PORTRAIT -->
+    <div class="d-portrait">
+      <div class="d-frame">
+        <!-- SVG portrait of Peter Drucker -->
+        <svg viewBox="0 0 220 270" xmlns="http://www.w3.org/2000/svg" width="220" height="270">
+          <defs>
+            <linearGradient id="bgd" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#130d1e"/>
+              <stop offset="100%" stop-color="#0a0815"/>
+            </linearGradient>
+            <linearGradient id="skin" x1="0%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#c9a47a"/>
+              <stop offset="100%" stop-color="#b08560"/>
+            </linearGradient>
+            <linearGradient id="suit" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1a2040"/>
+              <stop offset="100%" stop-color="#111530"/>
+            </linearGradient>
+            <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="rgba(245,194,66,0.06)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Background -->
+          <rect width="220" height="270" fill="url(#bgd)"/>
+          <rect width="220" height="270" fill="url(#glow)"/>
+
+          <!-- Suit body -->
+          <path d="M18 270 Q12 210 35 188 L75 175 L110 200 L145 175 L185 188 Q208 210 202 270Z" fill="url(#suit)"/>
+          <!-- Lapels -->
+          <path d="M75 175 L93 205 L110 225 L90 200Z" fill="#22285a"/>
+          <path d="M145 175 L127 205 L110 225 L130 200Z" fill="#22285a"/>
+          <!-- Shirt & tie -->
+          <path d="M93 205 L110 225 L127 205 L120 195 L110 200 L100 195Z" fill="#e8e8e8"/>
+          <path d="M110 200 L116 215 L110 265 L104 215Z" fill="#8a1515"/>
+          <!-- Collar -->
+          <path d="M93 205 Q97 195 110 190 Q123 195 127 205" fill="none" stroke="#d0d0e0" stroke-width="1.5"/>
+
+          <!-- Neck -->
+          <ellipse cx="110" cy="173" rx="18" ry="20" fill="url(#skin)"/>
+
+          <!-- Head -->
+          <ellipse cx="110" cy="118" rx="50" ry="58" fill="url(#skin)"/>
+
+          <!-- Ear left -->
+          <ellipse cx="61" cy="120" rx="10" ry="14" fill="url(#skin)"/>
+          <path d="M63 114 Q58 120 63 126" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>
+          <!-- Ear right -->
+          <ellipse cx="159" cy="120" rx="10" ry="14" fill="url(#skin)"/>
+          <path d="M157 114 Q162 120 157 126" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>
+
+          <!-- Hair - thin white/grey, elderly style -->
+          <path d="M63 95 Q60 65 80 52 Q95 42 110 40 Q125 42 140 52 Q160 65 157 95" fill="#d8d4cc"/>
+          <ellipse cx="110" cy="68" rx="40" ry="30" fill="url(#skin)"/>
+          <!-- Temples grey -->
+          <path d="M63 95 Q60 70 72 58" fill="#ccc9c0" stroke="none"/>
+          <path d="M157 95 Q160 70 148 58" fill="#ccc9c0" stroke="none"/>
+
+          <!-- Forehead wrinkle lines (distinguished elder) -->
+          <path d="M85 90 Q110 87 135 90" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1" stroke-linecap="round"/>
+          <path d="M88 82 Q110 79 132 82" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="0.8" stroke-linecap="round"/>
+
+          <!-- Eyebrows - thick -->
+          <path d="M80 105 Q90 100 102 104" fill="none" stroke="#5a4530" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M118 104 Q130 100 140 105" fill="none" stroke="#5a4530" stroke-width="3.5" stroke-linecap="round"/>
+
+          <!-- Eyes -->
+          <ellipse cx="91" cy="114" rx="10" ry="7" fill="#f0ece4"/>
+          <ellipse cx="91" cy="114" rx="5" ry="5" fill="#2a1a08"/>
+          <circle cx="93" cy="112" r="1.5" fill="rgba(255,255,255,0.6)"/>
+          <path d="M81 114 Q83 109 91 108 Q99 109 101 114" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+
+          <ellipse cx="129" cy="114" rx="10" ry="7" fill="#f0ece4"/>
+          <ellipse cx="129" cy="114" rx="5" ry="5" fill="#2a1a08"/>
+          <circle cx="131" cy="112" r="1.5" fill="rgba(255,255,255,0.6)"/>
+          <path d="M119 114 Q121 109 129 108 Q137 109 139 114" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+
+          <!-- Glasses - round, iconic -->
+          <rect x="78" y="106" width="26" height="17" rx="8" fill="none" stroke="#8a7060" stroke-width="2"/>
+          <rect x="116" y="106" width="26" height="17" rx="8" fill="none" stroke="#8a7060" stroke-width="2"/>
+          <line x1="104" y1="114.5" x2="116" y2="114.5" stroke="#8a7060" stroke-width="2"/>
+          <line x1="56" y1="114.5" x2="78" y2="114.5" stroke="#8a7060" stroke-width="1.5"/>
+          <line x1="142" y1="114.5" x2="164" y2="114.5" stroke="#8a7060" stroke-width="1.5"/>
+
+          <!-- Nose -->
+          <path d="M107 120 Q104 132 106 136 Q110 140 114 136 Q116 132 113 120" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- Smile - wise, slight -->
+          <path d="M94 150 Q110 158 126 150" fill="none" stroke="#9a7060" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Cheek warmth -->
+          <ellipse cx="80" cy="140" rx="12" ry="8" fill="rgba(200,120,80,0.08)"/>
+          <ellipse cx="140" cy="140" rx="12" ry="8" fill="rgba(200,120,80,0.08)"/>
+
+          <!-- Chin crease -->
+          <path d="M104 162 Q110 165 116 162" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1" stroke-linecap="round"/>
+
+          <!-- Gold frame decoration -->
+          <rect x="2" y="2" width="216" height="266" rx="16" fill="none" stroke="rgba(245,194,66,0.35)" stroke-width="1.5"/>
+          <rect x="5" y="5" width="210" height="260" rx="14" fill="none" stroke="rgba(245,194,66,0.1)" stroke-width="1"/>
+
+          <!-- "Father of Modern Management" stamp -->
+          <rect x="10" y="240" width="200" height="20" rx="4" fill="rgba(245,194,66,0.08)"/>
+          <text x="110" y="254" text-anchor="middle" font-family="Syne,sans-serif" font-size="8" font-weight="700" fill="rgba(245,194,66,0.7)" letter-spacing="1">PADRE DEL MANAGEMENT MODERNO</text>
+        </svg>
+      </div>
+      <div class="d-name">Peter F. Drucker</div>
+      <div class="d-dates">Viena, 1909 — Claremont, 2005</div>
+      <div class="d-epithet">"Padre del Management Moderno"<br>39 libros · asesor de GE, GM, Intel,<br>P&G · Prof. Claremont Univ. 35 años</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="d-content">
+      <div class="d-card">
+        <h3>🧠 ¿Quién fue Drucker?</h3>
+        <p>Economista, escritor y profesor austro-americano. Fue el primero en tratar la gestión empresarial como una disciplina seria y sistemática. Su obra abarca desde los años 40 hasta los 2000, siendo pionero en conceptos como descentralización, privatización, gestión por objetivos (MBO) y la sociedad del conocimiento.</p>
+      </div>
+
+      <div class="d-quote">
+        <span style="padding-top:12px;display:block">"La mejor manera de predecir el futuro es <strong>crearlo</strong>."</span>
+        <cite>— Peter F. Drucker</cite>
+      </div>
+
+      <div class="d-quote" style="margin-top:0">
+        <span style="padding-top:12px;display:block">"El trabajador del conocimiento no puede ser manejado; solo puede <strong>liderarse a sí mismo</strong>. El trabajo del gerente es crear las condiciones."</span>
+        <cite>— Peter F. Drucker, "The Effective Executive" (1967)</cite>
+      </div>
+
+      <div class="kw-box">
+        <h3>💡 El "Trabajador del Conocimiento" — Cómo cambió la gestión de ingenieros</h3>
+        <div class="kw-grid">
+          <div class="kw-item">
+            <div class="kw-num">1</div>
+            <div class="kw-text"><strong style="color:var(--gold)">Definición (1959):</strong> Trabajador cuyo capital principal es su conocimiento especializado, no su fuerza física. El ingeniero de software es el arquetipo perfecto.</div>
+          </div>
+          <div class="kw-item">
+            <div class="kw-num">2</div>
+            <div class="kw-text"><strong style="color:var(--gold)">Ruptura con Taylor:</strong> Antes: supervisión directa, procesos estandarizados, eficiencia mecánica. Drucker: autonomía, resultados sobre actividad, auto-gestión del experto.</div>
+          </div>
+          <div class="kw-item">
+            <div class="kw-num">3</div>
+            <div class="kw-text"><strong style="color:var(--gold)">Gestión por Objetivos (MBO):</strong> No se controla cómo trabaja el ingeniero, sino qué produce. Origen de los modernos OKRs usados en Google, Intel, Spotify.</div>
+          </div>
+          <div class="kw-item">
+            <div class="kw-num">4</div>
+            <div class="kw-text"><strong style="color:var(--gold)">Impacto actual:</strong> Trabajo remoto, self-managed teams, metodologías ágiles — todo derivado del principio Drucker: <em>el conocimiento es la herramienta de producción del siglo XXI.</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-card" style="border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.04)">
+        <h3 style="color:var(--blue)">⚡ Antes vs Después de Drucker en IT</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+          <div style="padding:10px;background:rgba(255,112,96,.05);border-radius:8px;border:1px solid rgba(255,112,96,.2)">
+            <div style="color:var(--coral);font-weight:700;font-size:12px;margin-bottom:6px">❌ ANTES (Taylorismo)</div>
+            <div style="font-size:12px;color:var(--muted)">
+              • Supervisión presencial constante<br>
+              • Control de horas trabajadas<br>
+              • Procesos rígidos e inamovibles<br>
+              • Manager = capataz técnico<br>
+              • Productividad = líneas de código
+            </div>
+          </div>
+          <div style="padding:10px;background:rgba(16,240,160,.05);border-radius:8px;border:1px solid rgba(16,240,160,.2)">
+            <div style="color:var(--mint);font-weight:700;font-size:12px;margin-bottom:6px">✅ DESPUÉS (Drucker)</div>
+            <div style="font-size:12px;color:var(--muted)">
+              • Autonomía y autogestión<br>
+              • Control por resultados / OKRs<br>
+              • Metodologías ágiles y adaptativas<br>
+              • Manager = facilitador / coach<br>
+              • Productividad = valor entregado
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div style="margin-top:24px">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:14px">📅 Línea de Tiempo: Del Concepto al Impacto</div>
+    <div class="d-timeline">
+      <div class="tli a">
+        <div class="tli-yr">1959</div>
+        <div class="tli-txt">Introduce "Knowledge Worker" en <em>Landmarks of Tomorrow</em></div>
+      </div>
+      <div class="tli b">
+        <div class="tli-yr">1967</div>
+        <div class="tli-txt">Publica <em>The Effective Executive</em>: cómo gestionar sin supervisar</div>
+      </div>
+      <div class="tli c">
+        <div class="tli-yr">1999</div>
+        <div class="tli-txt">Predice que el trabajo remoto y la autogestión dominarán el S.XXI</div>
+      </div>
+      <div class="tli d">
+        <div class="tli-yr">Hoy</div>
+        <div class="tli-txt">OKRs, Agile, trabajo remoto — todo valida la visión Drucker</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ PILAR 3 ══════════════════ -->
+<div class="sec s3">
+  <div class="sh">
+    <div class="sn n3">3</div>
+    <div>
+      <div class="st t3">Roles Gerenciales de Mintzberg</div>
+      <div class="ss">Los 10 roles del gerente y los 3 más críticos para un Líder de Proyecto Informático</div>
+    </div>
+  </div>
+
+  <div class="mz-bio">
+    <div class="mz-bio-icon">👨‍🏫</div>
+    <div class="mz-bio-text">
+      <h3>Henry Mintzberg (1939 - , Montreal, Canadá)</h3>
+      <p>Profesor del MIT Sloan y McGill University. En su tesis doctoral (1968) estudió empíricamente el trabajo real de los gerentes — observándolos en acción durante semanas. Su libro "The Nature of Managerial Work" (1973) desmitificó la idea del manager como planificador racional e identificó 10 roles concretos organizados en 3 categorías.</p>
+    </div>
+  </div>
+
+  <div class="mz-cats">
+
+    <!-- INTERPERSONALES -->
+    <div class="mz-cat mz-i">
+      <div class="mz-head">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#a78bfa" stroke-width="1"/><circle cx="8" cy="6" r="2.5" fill="#a78bfa" opacity=".7"/><path d="M3 13 Q3 10 8 10 Q13 10 13 13" stroke="#a78bfa" stroke-width="1.5" fill="none"/></svg>
+        Roles Interpersonales
+      </div>
+      <ul class="mz-roles">
+        <li class="mz-role">
+          <span class="re">🎩</span>
+          <div><div class="rn">1. Figura Representativa</div><div class="rd">Cabeza ceremonial. Firma contratos, asiste a eventos, representa a la organización. En IT: keynote en conferencias tech, firma con vendors.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">⭐</span>
+          <div><div class="rn">2. Líder</div><div class="rd">Motiva, dirige y desarrolla al equipo. En IT: planes de carrera, 1:1s, mentoring técnico, resolución de conflictos.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">🔗</span>
+          <div><div class="rn">3. Enlace</div><div class="rd">Mantiene red externa de contactos útiles. En IT: relaciones con comunidades dev, cloud providers, clientes, freelancers.</div></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- INFORMACIONALES -->
+    <div class="mz-cat mz-n">
+      <div class="mz-head">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="#22d3ee" stroke-width="1"/><path d="M5 7h6M5 10h4" stroke="#22d3ee" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Roles Informacionales
+      </div>
+      <ul class="mz-roles">
+        <li class="mz-role">
+          <span class="re">🔍</span>
+          <div><div class="rn">4. Monitor</div><div class="rd">Busca y recibe información del entorno. En IT: monitorea vulnerabilidades, tendencias tech, métricas del sistema, feedback de usuarios.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">📢</span>
+          <div><div class="rn">5. Difusor</div><div class="rd">Distribuye información clave internamente. En IT: comunica cambios de arquitectura, decisiones técnicas, resultados de sprint al equipo.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">📡</span>
+          <div><div class="rn">6. Portavoz</div><div class="rd">Transmite información hacia el exterior. En IT: reporta al CEO/board, presenta el roadmap tecnológico a inversores o clientes clave.</div></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- DECISIONALES -->
+    <div class="mz-cat mz-d">
+      <div class="mz-head">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L14 14H2Z" stroke="#ff7060" stroke-width="1" fill="none"/><path d="M8 6v4M8 12v1" stroke="#ff7060" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Roles Decisionales
+      </div>
+      <ul class="mz-roles">
+        <li class="mz-role">
+          <span class="re">💡</span>
+          <div><div class="rn">7. Emprendedor</div><div class="rd">Inicia proyectos e innova. En IT: propone migración a cloud, adoptar IA generativa, lanzar nuevas features estratégicas.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">🚨</span>
+          <div><div class="rn">8. Gestor de Crisis</div><div class="rd">Maneja problemas inesperados. En IT: responde a outage en producción, brecha de seguridad, bug crítico en víspera de lanzamiento.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">⚖️</span>
+          <div><div class="rn">9. Asignador de Recursos</div><div class="rd">Distribuye tiempo, presupuesto y personas. En IT: decide qué entra al sprint, cuánto budget va a infraestructura vs desarrollo.</div></div>
+        </li>
+        <li class="mz-role">
+          <span class="re">🤝</span>
+          <div><div class="rn">10. Negociador</div><div class="rd">Representa en negociaciones formales. En IT: negocia SLAs con AWS, contratos con freelancers, licencias de software.</div></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TOP 3 -->
+  <div class="top3-label">🏆 Los 3 Roles Más Críticos para un Líder de Proyecto Informático</div>
+  <div class="top3">
+
+    <div class="t3c">
+      <div class="t3rank">1</div>
+      <div class="t3icon">⭐</div>
+      <div class="t3name">LÍDER</div>
+      <div class="t3why">El talento técnico es escaso y difícil de retener. Sin un ambiente de crecimiento, confianza y propósito, los mejores ingenieros se van. El líder crea el entorno donde el equipo puede brillar — y sin equipo motivado, ningún proyecto funciona.</div>
+      <span class="t3cat">INTERPERSONAL</span>
+    </div>
+
+    <div class="t3c">
+      <div class="t3rank">2</div>
+      <div class="t3icon">💡</div>
+      <div class="t3name">EMPRENDEDOR</div>
+      <div class="t3why">La tecnología avanza cada 18 meses (Ley de Moore). El líder IT que no propone innovaciones activamente queda obsoleto. Migrar a microservicios, adoptar IA, incorporar nuevas herramientas — es responsabilidad emprendedora del líder tecnológico.</div>
+      <span class="t3cat">DECISIONAL</span>
+    </div>
+
+    <div class="t3c">
+      <div class="t3rank">3</div>
+      <div class="t3icon">⚖️</div>
+      <div class="t3name">ASIGNADOR DE RECURSOS</div>
+      <div class="t3why">La distribución del tiempo de desarrollo entre deuda técnica, features y seguridad determina la salud del proyecto a largo plazo. Cada sprint es una decisión de inversión: asignar mal los recursos hoy significa apagar incendios mañana.</div>
+      <span class="t3cat">DECISIONAL</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════ PILAR 4 ══════════════════ -->
+<div class="sec s4">
+  <div class="sh">
+    <div class="sn n4">4</div>
+    <div>
+      <div class="st t4">Gerencia Integral</div>
+      <div class="ss">Por qué el gerente IT moderno debe dominar Técnica + Mercadeo + Finanzas</div>
+    </div>
+  </div>
+
+  <div class="g-layout">
+    <!-- Triangle SVG -->
+    <div class="g-tri-wrap">
+      <svg viewBox="0 0 300 280" width="300" height="280">
+        <defs>
+          <radialGradient id="cg" cx="50%" cy="55%" r="40%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.06)"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Triangle sides -->
+        <polygon points="150,20 290,260 10,260"
+          fill="rgba(16,240,160,0.03)"
+          stroke="rgba(16,240,160,0.25)" stroke-width="1.5"/>
+
+        <!-- Gradient fill -->
+        <polygon points="150,20 290,260 10,260" fill="url(#cg)"/>
+
+        <!-- Inner lines / web -->
+        <line x1="150" y1="20" x2="150" y2="180" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="290" y1="260" x2="98" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="10" y1="260" x2="202" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+        <!-- Node: Técnica (top) -->
+        <circle cx="150" cy="20" r="32" fill="rgba(34,211,238,0.12)" stroke="rgba(34,211,238,0.5)" stroke-width="1.5"/>
+        <text x="150" y="15" text-anchor="middle" font-size="17">💻</text>
+        <text x="150" y="30" text-anchor="middle" font-family="Syne,sans-serif" font-size="9.5" font-weight="800" fill="#22d3ee">TÉCNICA</text>
+
+        <!-- Node: Mercadeo (right) -->
+        <circle cx="272" cy="252" r="32" fill="rgba(245,194,66,0.12)" stroke="rgba(245,194,66,0.5)" stroke-width="1.5"/>
+        <text x="272" y="247" text-anchor="middle" font-size="17">📣</text>
+        <text x="272" y="262" text-anchor="middle" font-family="Syne,sans-serif" font-size="9.5" font-weight="800" fill="#f5c242">MERCADEO</text>
+
+        <!-- Node: Finanzas (left) -->
+        <circle cx="28" cy="252" r="32" fill="rgba(16,240,160,0.12)" stroke="rgba(16,240,160,0.5)" stroke-width="1.5"/>
+        <text x="28" y="247" text-anchor="middle" font-size="17">💰</text>
+        <text x="28" y="262" text-anchor="middle" font-family="Syne,sans-serif" font-size="9.5" font-weight="800" fill="#10f0a0">FINANZAS</text>
+
+        <!-- Center: CTO INTEGRAL -->
+        <circle cx="150" cy="180" r="38" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+        <text x="150" y="173" text-anchor="middle" font-size="18">🎯</text>
+        <text x="150" y="188" text-anchor="middle" font-family="Syne,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,0.7)">CTO</text>
+        <text x="150" y="200" text-anchor="middle" font-family="Syne,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,0.7)">INTEGRAL</text>
+
+        <!-- Edge labels -->
+        <text x="215" y="138" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.3)" transform="rotate(58,215,138)">Producto + Mercado</text>
+        <text x="83" y="138" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.3)" transform="rotate(-58,83,138)">ROI + Arquitectura</text>
+        <text x="150" y="268" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.3)">Budget + Posicionamiento</text>
+      </svg>
+      <div class="g-tri-label">El Triángulo del Gerente IT Completo</div>
+    </div>
+
+    <!-- Pillars -->
+    <div class="g-pillars">
+      <div class="gp gp-t">
+        <div class="gp-title">💻 DOMINIO TÉCNICO</div>
+        <div class="gp-body">El gerente IT debe hablar el idioma del equipo. Sin credibilidad técnica, el equipo no lo respeta y las decisiones de arquitectura son ciegas.</div>
+        <ul class="gp-ul">
+          <li>Comprender arquitecturas: microservicios, monolitos, serverless, cloud</li>
+          <li>Gestionar la deuda técnica con criterio estratégico</li>
+          <li>Evaluar stacks tecnológicos (build vs buy, open-source vs licencia)</li>
+          <li>Entender CI/CD, DevSecOps, SLAs e infraestructura como código</li>
+          <li>Seguridad informática como factor no negociable en cada decisión</li>
+        </ul>
+        <span class="gp-no">⚠️ Sin técnica: "arquitecto de PowerPoint" sin credibilidad real</span>
+      </div>
+
+      <div class="gp gp-m">
+        <div class="gp-title">📣 DOMINIO DE MERCADEO</div>
+        <div class="gp-body">La tecnología más brillante falla si no responde a una necesidad de mercado. El CTO debe entender al cliente y comunicar el valor del producto.</div>
+        <ul class="gp-ul">
+          <li>Entender al usuario final: mapas de empatía, jobs-to-be-done</li>
+          <li>Comunicar la visión tecnológica a stakeholders no técnicos</li>
+          <li>Posicionamiento: ¿por qué nuestra solución vs la competencia?</li>
+          <li>Product-Market Fit: ¿el producto resuelve el problema correcto?</li>
+          <li>"Vender" internamente la hoja de ruta tecnológica al CEO y directorio</li>
+        </ul>
+        <span class="gp-no">⚠️ Sin mercadeo: tecnología brillante que nadie usa ni quiere pagar</span>
+      </div>
+
+      <div class="gp gp-f">
+        <div class="gp-title">💰 DOMINIO FINANCIERO</div>
+        <div class="gp-body">Cada decisión tecnológica es una decisión financiera. El CTO que no habla de ROI, TCO y presupuesto no tiene poder real en la organización.</div>
+        <ul class="gp-ul">
+          <li>TCO (Total Cost of Ownership): costo real de mantener un sistema</li>
+          <li>ROI de proyectos de desarrollo: ¿vale la pena construirlo?</li>
+          <li>CapEx vs OpEx: on-premise vs cloud en el balance empresarial</li>
+          <li>Burn rate y unit economics en contextos de startup</li>
+          <li>Justificar el presupuesto de IT con métricas de negocio</li>
+        </ul>
+        <span class="gp-no">⚠️ Sin finanzas: el IT se convierte en centro de costo, no de valor</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom: danger table -->
+  <div class="g-bottom">
+    <div class="div"></div>
+    <div class="gd-title">⚡ ¿Qué pasa si dominas solo uno de los tres?</div>
+    <div class="g-danger">
+      <div class="gd-item dt">
+        <div class="gd-who">💻 Solo Técnica</div>
+        <div class="gd-text">Arquitecto brillante pero gerente fallido. Construye sistemas perfectos para problemas que nadie tiene, sin poder defender su presupuesto ante la junta. Título: <em>"Developer Sénior con acceso a correos de CEO"</em>.</div>
+      </div>
+      <div class="gd-item dm">
+        <div class="gd-who">📣 Solo Mercadeo</div>
+        <div class="gd-text">Vendedor de humo. Promete features imposibles, no entiende la deuda técnica y crea expectativas que el equipo no puede cumplir. Destruye la credibilidad de IT frente al negocio. Título: <em>"Evangelista sin ejecución"</em>.</div>
+      </div>
+      <div class="gd-item df">
+        <div class="gd-who">💰 Solo Finanzas</div>
+        <div class="gd-text">Controlador de costos que recorta todo sin entender el impacto técnico. Elimina la deuda técnica del presupuesto y luego paga 10× para apagar incendios. Título: <em>"CFO temporal que arruinó el producto"</em>.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ CONCLUSIÓN ══════════════════ -->
+<div class="concl">
+  <div class="concl-inner">
+    <h2>🎯 La Síntesis: El CTO que el Siglo XXI Exige</h2>
+    <p>No basta con saber programar. El verdadero CTO es quien aplica el ciclo administrativo con disciplina, honra el legado de Drucker dando autonomía a su equipo, activa los roles de Mintzberg según el contexto, y domina el triángulo virtuoso de técnica, mercadeo y finanzas — todo a la vez, sin soltar ninguno.</p>
+    <div class="skills">
+      <span class="skl">📋 Planificación Estratégica</span>
+      <span class="skl">🏗️ Organización de Equipos</span>
+      <span class="skl">🧭 Liderazgo Técnico</span>
+      <span class="skl">📊 Control por Métricas</span>
+      <span class="skl">🧠 Knowledge Worker Management</span>
+      <span class="skl">⭐ Rol de Líder (Mintzberg)</span>
+      <span class="skl">💡 Pensamiento Emprendedor</span>
+      <span class="skl">💻 Credibilidad Técnica</span>
+      <span class="skl">📣 Comunicación de Valor</span>
+      <span class="skl">💰 Visión Financiera</span>
+    </div>
+    <div style="margin-top:28px;font-size:13px;color:var(--muted);font-style:italic">
+      Basado en: Proceso Administrativo (Fayol) · Peter Drucker · Henry Mintzberg · Gerencia Integral (Sallenave)
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+</body>
+</html>
