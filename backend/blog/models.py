@@ -103,12 +103,14 @@ class MediaAttachment(models.Model):
     )
     file = models.FileField(
         upload_to="posts/media/",
+        max_length=500,
         blank=True,
         null=True,
         verbose_name="Archivo",
         help_text="Formatos aceptados: imágenes (JPG, PNG), videos (MP4, AVI), PDF, Word, Excel, PowerPoint.",
     )
     external_url = models.URLField(
+        max_length=2000,
         blank=True,
         verbose_name="URL externa",
         help_text="URL de YouTube, Vimeo u otra plataforma para incrustar.",
