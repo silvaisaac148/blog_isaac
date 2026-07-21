@@ -17,6 +17,16 @@ function getFileName(url) {
     return decodeURIComponent(url.split("/").pop().split("?")[0]);
 }
 
+// For an external link, show the site domain as the name (e.g. "drive.google.com").
+function getLinkLabel(url) {
+    if (!url) return "Enlace externo";
+    try {
+        return new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+        return "Enlace externo";
+    }
+}
+
 function MediaGallery({ attachments }) {
     if (!attachments || attachments.length === 0) return null;
 
@@ -40,9 +50,9 @@ function MediaGallery({ attachments }) {
             <div className="media-gallery-grid">
                 {attachments.map((item) => (
                     <div key={item.id} className="media-item fade-in-up">
-                        {/* Images */}
-                        {item.media_type === "image" && item.file && (
-                            <img src={item.file} alt={item.caption || "Imagen adjunta"} loading="lazy" />
+                        {/* Images: uploaded file or external URL */}
+                        {item.media_type === "image" && (item.file || item.external_url) && (
+                            <img src={item.file || item.external_url} alt={item.caption || "Imagen adjunta"} loading="lazy" />
                         )}
 
                         {/* Uploaded videos */}
@@ -63,8 +73,8 @@ function MediaGallery({ attachments }) {
                             />
                         )}
 
-                        {/* Documents: PDF, Word, PowerPoint, Excel, etc. */}
-                        {isDocType(item.media_type) && item.file && (
+                        {/* Documents & external links: uploaded file or a URL */}
+                        {isDocType(item.media_type) && (item.file || item.external_url) && (
                             <div className="media-doc-card">
                                 <div
                                     className="media-doc-icon"
@@ -73,7 +83,9 @@ function MediaGallery({ attachments }) {
                                     <span>{FILE_TYPE_CONFIG[item.media_type]?.icon || "📄"}</span>
                                 </div>
                                 <div className="media-doc-info">
-                                    <span className="media-doc-name">{getFileName(item.file)}</span>
+                                    <span className="media-doc-name">
+                                        {item.file ? getFileName(item.file) : getLinkLabel(item.external_url)}
+                                    </span>
                                     <span
                                         className="media-doc-badge"
                                         style={{
@@ -85,12 +97,12 @@ function MediaGallery({ attachments }) {
                                     </span>
                                 </div>
                                 <a
-                                    href={item.file}
+                                    href={item.file || item.external_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="media-doc-download"
                                 >
-                                    ⬇ Descargar
+                                    {item.file ? "⬇ Descargar" : "↗ Abrir enlace"}
                                 </a>
                             </div>
                         )}
