@@ -5,6 +5,8 @@ Django settings for Blog Portafolio — Gerencia y Mercadeo.
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 try:
     from decouple import config
 except ImportError:
@@ -15,14 +17,30 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ─── Security ────────────────────────────────────────────────────────
-SECRET_KEY = config("DJANGO_SECRET_KEY", default="change-me-in-production-!@#$%")
+_INSECURE_DEFAULT_KEY = "change-me-in-production-!@#$%"
+SECRET_KEY = config("DJANGO_SECRET_KEY", default=_INSECURE_DEFAULT_KEY)
 DEBUG = config("DJANGO_DEBUG", default="True", cast=lambda v: v.lower() in ("true", "1", "yes"))
+
+if not DEBUG and SECRET_KEY == _INSECURE_DEFAULT_KEY:
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY environment variable must be set when DJANGO_DEBUG=False."
+    )
+
 ALLOWED_HOSTS = config(
     "DJANGO_ALLOWED_HOSTS",
     default="localhost,127.0.0.1",
     cast=lambda v: [h.strip() for h in v.split(",")],
 )
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host not in ("localhost", "127.0.0.1", "*")]
+
+if not DEBUG:
+    # Railway (and most PaaS) terminate TLS at the edge and forward the
+    # original scheme via this header — without it request.is_secure()
+    # is always False behind the proxy, breaking secure cookies/redirects.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 # ─── Applications ────────────────────────────────────────────────────
 INSTALLED_APPS = [
@@ -115,6 +133,23 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Local disk storage does NOT survive redeploys on Railway/most PaaS
+# (ephemeral filesystem) — uploaded images/docs get wiped every deploy
+# unless either a persistent volume is mounted at MEDIA_ROOT, or a
+# GCS bucket is configured here via env vars.
+GS_BUCKET_NAME = config("GS_BUCKET_NAME", default="")
+if GS_BUCKET_NAME:
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    GS_DEFAULT_ACL = "publicRead"
+    GS_QUERYSTRING_AUTH = False
+
 # ─── Default Primary Key ────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -146,4 +181,8 @@ CKEDITOR_5_CONFIGS = {
         ],
     },
 }
-CKEDITOR_5_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+CKEDITOR_5_FILE_STORAGE = (
+    "storages.backends.gcloud.GoogleCloudStorage"
+    if GS_BUCKET_NAME
+    else "django.core.files.storage.FileSystemStorage"
+)

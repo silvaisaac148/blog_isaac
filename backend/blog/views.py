@@ -66,6 +66,12 @@ class MediaAttachmentViewSet(viewsets.ModelViewSet):
     Typically managed via the admin, but exposed for programmatic access.
     """
 
-    queryset = MediaAttachment.objects.select_related("post").all()
     serializer_class = MediaAttachmentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        queryset = MediaAttachment.objects.select_related("post")
+        # Public users only see attachments belonging to published posts
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(post__is_published=True)
+        return queryset

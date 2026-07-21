@@ -114,9 +114,14 @@ git push -u origin main
    - `CORS_ALLOWED_ORIGINS`: `https://tu-dominio-frontend.vercel.app`
    - *Nota: Railway te permite auto-completar las credenciales de la base de datos (DB_URL).* Deberás configurar estas manualmente en Railway agregando `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT` mirando las variables que generó tu base de datos PostgreSQL de Railway.
 5. **Comando de Inicio:**
-   Vuelve a la pestaña **Settings** del backend. En la sección **Deploy**, asegúrate de que el *Start Command* sea:
-   `python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT`
-6. **Generar Dominio:**
+   Ya no hace falta configurarlo a mano: el repo incluye `backend/Procfile`, que Railway detecta automáticamente y usa como *Start Command*:
+   `python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi --bind 0.0.0.0:$PORT --workers 2 --threads 4`
+   (Si tu servicio tiene un *Custom Start Command* puesto a mano en Settings → Deploy, bórralo para que use el del Procfile.)
+6. **Persistencia de archivos multimedia (IMPORTANTE):**
+   El filesystem de Railway es efímero — cualquier imagen/documento subido vía admin se **pierde en cada redeploy** a menos que configures uno de estos dos:
+   - **Opción simple:** Railway → tu servicio backend → **Volumes** → crea un volumen y móntalo en `/app/media` (persiste entre deploys, cero cambios de código).
+   - **Opción robusta (recomendada si quieres CDN/escala):** ya está soportado en `settings.py` vía `django-storages` + GCS. Crea un bucket de Google Cloud Storage, una service account con acceso, y agrega las variables `GS_BUCKET_NAME` y `GOOGLE_APPLICATION_CREDENTIALS` (o `GS_CREDENTIALS`) en Railway. Con `GS_BUCKET_NAME` seteado, el backend sube automáticamente a GCS en vez de disco local.
+7. **Generar Dominio:**
    En la pestaña **Settings** bajo **Networking**, haz clic en *Generate Domain*.
 
 ### Paso 3: Frontend (Vercel)
@@ -162,9 +167,11 @@ Tanto Vercel como Railway proveen documentación muy sencilla si decides comprar
 
 ## 🛡️ Seguridad en Producción
 
-- [ ] Cambiar `DJANGO_SECRET_KEY` a un valor seguro y único
+- [ ] **Acción urgente:** rotar la contraseña del superusuario `admin` en Railway (`python manage.py changepassword admin` o crear uno nuevo y borrar el viejo). `seed_lapsos` creaba antes un usuario `admin:admin1234` hardcodeado — esa credencial quedó expuesta en el historial de git público. Ya se quitó del código, pero si ese comando llegó a correr en producción hay que rotarla a mano.
+- [ ] Cambiar `DJANGO_SECRET_KEY` a un valor seguro y único (el backend ahora falla al arrancar si `DJANGO_DEBUG=False` y no está seteado)
 - [ ] Establecer `DJANGO_DEBUG=False`
 - [ ] Configurar `ALLOWED_HOSTS` con tu dominio
 - [ ] Configurar `CORS_ALLOWED_ORIGINS` con la URL de tu frontend
-- [ ] Usar Google Secret Manager para credenciales sensibles
-- [ ] Habilitar HTTPS (automático con App Engine)
+- [ ] Configurar almacenamiento persistente de media (Volumen de Railway o `GS_BUCKET_NAME`) — ver Paso 2.6
+- [ ] Usar Google Secret Manager o las Variables de Railway para credenciales sensibles
+- [ ] Habilitar HTTPS (automático con Railway/Vercel)

@@ -1,0 +1,6 @@
+# Force LF on files consumed by the Linux build/runtime (Railway).
+# CRLF here breaks pip parsing and Procfile command execution.
+backend/requirements.txt text eol=lf
+backend/Procfile text eol=lf
+backend/runtime.txt text eol=lf
+*.sh text eol=lf
