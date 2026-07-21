@@ -91,9 +91,31 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 # ─── Database ────────────────────────────────────────────────────────
-# Use PostgreSQL in production, SQLite for local development
+# Priority:
+#   1. DATABASE_URL (single connection string — Railway's Postgres provides
+#      this; reference it as ${{Postgres.DATABASE_URL}} in the backend service)
+#   2. Individual DB_* variables (DB_HOST, DB_NAME, ...)
+#   3. Local SQLite (development only)
+# WARNING: falling through to SQLite in production means an EMPTY, ephemeral
+# database — always make sure DATABASE_URL or DB_HOST is set on the server.
+_database_url = config("DATABASE_URL", default="")
 _db_host = config("DB_HOST", default="")
-if _db_host:
+
+if _database_url:
+    from urllib.parse import urlparse, unquote
+
+    _u = urlparse(_database_url)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": _u.path.lstrip("/") or "railway",
+            "USER": unquote(_u.username or ""),
+            "PASSWORD": unquote(_u.password or ""),
+            "HOST": _u.hostname or "",
+            "PORT": str(_u.port or "5432"),
+        }
+    }
+elif _db_host:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -111,6 +133,15 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
+# Guard: in production (DEBUG=False), refuse to start on the SQLite fallback —
+# it would serve an empty ephemeral DB and silently "lose" all data.
+if not DEBUG and DATABASES["default"]["ENGINE"].endswith("sqlite3"):
+    raise ImproperlyConfigured(
+        "No database configured. Set DATABASE_URL (or DB_HOST/DB_NAME/...) "
+        "to your Postgres instance. Refusing to start on ephemeral SQLite "
+        "with DEBUG=False."
+    )
 
 # ─── Auth Password Validators ───────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
